@@ -39,7 +39,6 @@ void draw()
     startButton.display();
     return;
   }
-  debugger;
   controller.displayScene(level);
   if(controller.isLevelCompleted()){
      next.display();
@@ -51,13 +50,12 @@ void mousePressed()
   controller.mousePressedScene(level);
   if(next.mousePressed()){
     level+=1;
-    controller.startLevel();
+    controller.startLevel(level);
   }
   if(startButton.mousePressed()){
-    debugger;
     start=true;
     level=0;
-    controller.startLevel();
+    controller.startLevel(level);
   }
 }
 
@@ -742,25 +740,27 @@ class GameController{
   
   void createScenes(){
     Scene sceneOne = new Scene("scene1.wav");
-    sceneOne.addType("pig");
+    sceneOne.getTypes().add("pig");
     PigButton pigButton = new PigButton(100, 10, 128, 128);
     CowButton cowButton = new CowButton(250, 10, 128, 128);
-    sceneOne.addButton(pigButton);
-    sceneOne.addButton(cowButton);
+    sceneOne.getButtons().add(pigButton);
+    sceneOne.getButtons().add(cowButton);
     scenes[0]=sceneOne;
     
     //scene two
-    Scene sceneTwo = new Scene("scene1.wav", "pig");
+    Scene sceneTwo = new Scene("scene1.wav");
+    sceneTwo.getTypes().add("cow");
     CowButton cowButtonTwo = new CowButton(250, 10, 128, 128);
-    sceneTwo.addButton(cowButtonTwo);
+    sceneTwo.getButtons().add(cowButtonTwo);
     scenes[1]=sceneTwo;
   }
 
   void displayScene(int argLevel){
-      Toggle[] tmpButtons = scenes[argLevel].getButtons();
-      for(int i=0; i < tmpButtons.length; i++){
-        if(tmpButtons[i] != null){
-          tmpButtons[i].display();
+      //Toggle[] tmpButtons = scenes[argLevel].getButtons();
+      ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
+      for(int i=0; i < tmpButtons.size(); i++){
+        if(tmpButtons.get(i) != null){
+          tmpButtons.get(i).display();
         }
       }
   }
@@ -769,38 +769,31 @@ class GameController{
     if(argLevel<0){
       return;
     }
-     Toggle[] tmpButtons = scenes[argLevel].getButtons();
-      for(int i=0; i < tmpButtons.length; i++){
-        if(tmpButtons[i].mousePressed()){
-          tmpButtons[i].playSound();
-        }
-      }
+//    Toggle[] tmpButtons = scenes[argLevel].getButtons();
+    ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
+    for(int i=0; i < tmpButtons.size(); i++){
+     if(tmpButtons.get(i).mousePressed()){
+       tmpButtons.get(i).playSound();
+     }
+    }
   }
   
   void mouseReleasedScene(int argLevel){
     if(argLevel<0){
       return;
     }
-     Toggle[] tmpButtons = scenes[argLevel].getButtons();
-      for(int i=0; i < tmpButtons.length; i++){
-        tmpButtons[i].mouseReleased();
+     //Toggle[] tmpButtons = scenes[argLevel].getButtons();
+     ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
+      for(int i=0; i < tmpButtons.size(); i++){
+        tmpButtons.get(i).mouseReleased();
         setLevelCompleted(validateLevelCompleted(argLevel));
       }
   }
   
   boolean validateLevelCompleted(int argLevel){
-    String[] tmpTypes = scenes[argLevel].getTypes();
-    /*int counter = 0;
-     for(int i=0; i < tmpTypes.length; i++){
-       if(tmpTypes[i].equals(argButton.getName())){
-         counter++;
-       }
-       if(counter ==){
-         return true;
-       }
-     }
-     return false;*/
-     if(getCounterButtonsSelected(argLevel) == tmpTypes.length){
+    //String[] tmpTypes = scenes[argLevel].getTypes();
+     //if(getCounterButtonsSelected(argLevel) == tmpTypes.length){
+     if(getCounterButtonsSelected(argLevel) == scenes[argLevel].getTypes().size()){
        return true;
      }
      return false;
@@ -814,67 +807,46 @@ class GameController{
     levelCompleted = argLevelCompleted;
   }
   
-  /*boolean isButtonTypeSelected(String argType){
-    Toggle[] tmpButtons = scenes[argLevel].getButtons();
-     for(int i=0; i < tmpButtons.length; i++){
-       debugger;
-       if(tmpButtons[i].mouseReleased() && tmpButtons[i].getName().equal(argType)){
-         return true;
-       }
-     }
-     return false;
-  }*/
-  
   int getCounterButtonsSelected(int argLevel){
-     Toggle[] tmpButtons = scenes[argLevel].getButtons();
+     //Toggle[] tmpButtons = scenes[argLevel].getButtons();
+     ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
      int counter = 0;
-     for(int i=0; i < tmpButtons.length; i++){
-       if(tmpButtons[i].get()){
+     for(int i=0; i < tmpButtons.size(); i++){
+       if(tmpButtons.get(i).get()){
          counter++;
        }
      }
+     println("counter -> "+counter);
      return counter;
   }
   
-  void startLevel(){
+  void startLevel(int argLevel){
     setLevelCompleted(false);
+    scenes[argLevel].playScene();
   }
 }
 class Scene{
    Maxim maxi;
    AudioPlayer player;
-   Toggle[] buttons = new Toggle[2];
-   String[] types = new String[2]; 
+   ArrayList <Toggle> buttons = new ArrayList <Toggle>();
+   ArrayList <String> types = new ArrayList <String>(); 
    
    Scene(String argSound){
      maxi = new Maxim(this);
      player = maxi.loadFile(argSound);  
    }
    
-   void addType(String argType){
-     for(int i=0; i<types.length;i++){
-       if(types[i]==null){
-         types[i]=argType;
-         return;
-       }
-     }
-   }
-   
-   void addButton(Toggle argButton){
-     for(int i=0; i<buttons.length;i++){
-       if(buttons[i]==null){
-         buttons[i]=argButton;
-         return;
-       }
-     }
-   }
-   
-   Toggle[] getButtons(){
+   ArrayList<Toggle> getButtons(){
      return buttons;
    }
    
-   String[] getTypes(){
+   ArrayList <String> getTypes(){
      return types;
+   }
+   
+   void playScene(){
+     player.cue(0);
+     player.play();
    }
 }
 

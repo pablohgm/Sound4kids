@@ -39,7 +39,6 @@ void draw()
     startButton.display();
     return;
   }
-  debugger;
   controller.displayScene(level);
   if(controller.isLevelCompleted()){
      next.display();
@@ -51,13 +50,12 @@ void mousePressed()
   controller.mousePressedScene(level);
   if(next.mousePressed()){
     level+=1;
-    controller.startLevel();
+    controller.startLevel(level);
   }
   if(startButton.mousePressed()){
-    debugger;
     start=true;
     level=0;
-    controller.startLevel();
+    controller.startLevel(level);
   }
 }
 
