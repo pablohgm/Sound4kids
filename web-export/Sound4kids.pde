@@ -706,6 +706,30 @@ class MultiSlider extends Widget
   }
 }
 
+class GameController{
+  
+  Scene[] scenes;
+  
+  GameController(){
+  }
+  
+  void createScenes(){
+    Scene sceneOne = new Scene("scene1.wav");
+    sceneOne.addType("pig");
+    PigButton pigButton = new PigButton(100, 10, 128, 128);
+    CowButton cowButton = new CowButton(250, 10, 128, 128);
+    sceneOne.addButton(pigButton);
+    sceneOne.addButton(cowButton);
+    tmpScenes[0]=sceneOne;
+  }
+
+  void displayScene(int argLevel){
+      Toggle[] tmpButtons = scenes[argLevel];
+      for(int i=0; tmpButtons.lenght; i++){
+        tmpButtons[i].display();
+      }
+  }
+}
 class Scene{
    Maxim maxi;
    AudioPlayer player;
