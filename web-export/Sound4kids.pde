@@ -1,27 +1,27 @@
 /***Final Project*/
 
-PigButton pigButton;
-CowButton cowButton;
+/*PigButton pigButton;
+CowButton cowButton;*/
 
-/*GameController controller;
+GameController controller;
 
-int level;*/
+int level;
 
 void setup()
 {
    size(640, 480);
-   //level = 0;
-   pigButton = new PigButton(100, 10, 128, 128);
-   cowButton = new CowButton(250, 10, 128, 128);
-   //controller = new GameController();
-   //controller.createScenes();
+   level = 0;
+   /*pigButton = new PigButton(100, 10, 128, 128);
+   cowButton = new CowButton(250, 10, 128, 128);*/
+   controller = new GameController();
+   controller.createScenes();
 }
 
 void draw()
 {  
-  //controller.displayScene(level);
-   pigButton.display();
-   cowButton.display();
+  controller.displayScene(level);
+   /*pigButton.display();
+   cowButton.display();*/
 }
 
 void mousePressed()
@@ -711,6 +711,7 @@ class GameController{
   Scene[] scenes;
   
   GameController(){
+    scenes = new Scene[4];
   }
   
   void createScenes(){
@@ -720,12 +721,14 @@ class GameController{
     CowButton cowButton = new CowButton(250, 10, 128, 128);
     sceneOne.addButton(pigButton);
     sceneOne.addButton(cowButton);
-    tmpScenes[0]=sceneOne;
+    scenes[0]=sceneOne;
   }
 
   void displayScene(int argLevel){
-      Toggle[] tmpButtons = scenes[argLevel];
-      for(int i=0; tmpButtons.lenght; i++){
+      Toggle[] tmpButtons = scenes[argLevel].getButtons();
+      println("-> "+tmpButtons.length);
+      debugger;
+      for(int i=0; i < tmpButtons.length; i++){
         tmpButtons[i].display();
       }
   }
@@ -733,8 +736,8 @@ class GameController{
 class Scene{
    Maxim maxi;
    AudioPlayer player;
-   Toggle[] buttons;
-   String[] types; 
+   Toggle[] buttons = new Toggle[2];
+   String[] types = new String[2]; 
    
    Scene(String argSound){
      maxi = new Maxim(this);
@@ -742,11 +745,25 @@ class Scene{
    }
    
    void addType(String argType){
-     types.add(argType);
+     for(int i=0; i<types.length;i++){
+       if(types[i]==null){
+         types[i]=argType;
+         return;
+       }
+     }
    }
    
    void addButton(Toggle argButton){
-     buttons.add(argButton);
+     for(int i=0; i<buttons.length;i++){
+       if(buttons[i]==null){
+         buttons[i]=argButton;
+         return;
+       }
+     }
+   }
+   
+   Toggle[] getButtons(){
+     return buttons;
    }
 }
 
