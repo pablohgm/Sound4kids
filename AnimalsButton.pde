@@ -8,7 +8,7 @@ class PigButton extends Toggle{
   
    
    PigButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("", argPosX, argPosY, argWidth, argHeight);
+     super("pig", argPosX, argPosY, argWidth, argHeight);
      maxi = new Maxim(this);
      player = maxi.loadFile("pig.wav");
      super.setInactiveImage(ButtonInactive);
@@ -30,7 +30,7 @@ class CowButton extends Toggle{
     String type = "cow";
    
    CowButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("", argPosX, argPosY, argWidth, argHeight);
+     super("cow", argPosX, argPosY, argWidth, argHeight);
      maxi = new Maxim(this);
      player = maxi.loadFile("cow.wav");
      super.setInactiveImage(ButtonInactive);
