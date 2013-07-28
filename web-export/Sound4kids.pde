@@ -706,4 +706,23 @@ class MultiSlider extends Widget
   }
 }
 
+class Scene{
+   Maxim maxi;
+   AudioPlayer player;
+   Toggle[] buttons;
+   String[] types; 
+   
+   Scene(String argSound){
+     maxi = new Maxim(this);
+     player = maxi.loadFile(argSound);  
+   }
+   
+   void addType(String argType){
+     types.add(argType);
+   }
+   
+   void addButton(Toggle argButton){
+     buttons.add(argButton);
+   }
+}
 
