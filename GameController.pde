@@ -4,7 +4,7 @@ class GameController{
   boolean levelCompleted;
   
   GameController(){
-    scenes = new Scene[4];
+    scenes = new Scene[6];
   }
   
   void createScenes(){
@@ -33,7 +33,7 @@ class GameController{
     Scene sceneThree = new Scene("scene3.wav", "error.wav");
     sceneThree.getTypes().add("dog");
     sceneThree.getTypes().add("rooster");
-    AnimalButton duckButtonThree = new AnimalButton("duck", "duck.wav", "duck.png", "dcuk-selected.png", 150, 20, 128, 128);
+    AnimalButton duckButtonThree = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
     AnimalButton dogButtonThree = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 50, 160, 128, 128);
     AnimalButton roosterButtonThree = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 150, 300, 128, 128);
     sceneThree.getButtons().add(dogButtonThree);
@@ -43,24 +43,74 @@ class GameController{
     
     //scene four
     Scene sceneFour = new Scene("scene4.wav", "error.wav");
+    sceneFour.getTypes().add("duck");
     sceneFour.getTypes().add("dog");
-    AnimalButton dogButtonFour = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 250, 10, 128, 128);
+    sceneFour.getTypes().add("cow");
+    AnimalButton duckButtonFour = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 250, 10, 128, 128);
+    AnimalButton roosterButtonFour = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 110, 50, 128, 128);
+    AnimalButton dogButtonFour = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 180, 128, 128);
+    AnimalButton pigButtonFour = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 110, 300, 128, 128);
+    AnimalButton cowButtonFour = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 260, 340, 128, 128);
+    sceneFour.getButtons().add(duckButtonFour);
+    sceneFour.getButtons().add(roosterButtonFour);
     sceneFour.getButtons().add(dogButtonFour);
+    sceneFour.getButtons().add(pigButtonFour);
+    sceneFour.getButtons().add(cowButtonFour);
     scenes[3]=sceneFour;
     
     //scene five
-    Scene sceneFive = new Scene("scene4.wav", "error.wav");
-    sceneFive.getTypes().add("duck");
-    AnimalButton duckButtonFive = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 250, 10, 128, 128);
+    Scene sceneFive = new Scene("scene5.wav", "error.wav");
+    sceneFive.getTypes().add("rooster");
+    sceneFive.getTypes().add("bull");
+    AnimalButton bullButtonFive = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 300, 10, 128, 128);
+    AnimalButton duckButtonFive = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
+    AnimalButton roosterButtonFive = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 10, 100, 128, 128);
+    AnimalButton dogButtonFive = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 250, 128, 128);
+    AnimalButton pigButtonFive = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 150, 320, 128, 128);
+    AnimalButton cowButtonFive = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 300, 340, 128, 128);
+    sceneFive.getButtons().add(bullButtonFive);
     sceneFive.getButtons().add(duckButtonFive);
+    sceneFive.getButtons().add(roosterButtonFive);
+    sceneFive.getButtons().add(dogButtonFive);
+    sceneFive.getButtons().add(pigButtonFive);
+    sceneFive.getButtons().add(cowButtonFive);
     scenes[4]=sceneFive;
     
     //scene six
     Scene sceneSix = new Scene("scene5.wav", "error.wav");
     sceneSix.getTypes().add("bull");
-    AnimalButton bullButtonSix = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 250, 10, 128, 128);
+    sceneSix.getTypes().add("rooster");
+    AnimalButton bullButtonSix = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 300, 10, 128, 128);
+    AnimalButton duckButtonSix = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
+    AnimalButton roosterButtonSix = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 10, 100, 128, 128);
+    AnimalButton dogButtonSix = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 250, 128, 128);
+    AnimalButton pigButtonSix = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 150, 320, 128, 128);
+    AnimalButton cowButtonSix = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 300, 340, 128, 128);
     sceneSix.getButtons().add(bullButtonSix);
+    sceneSix.getButtons().add(duckButtonSix);
+    sceneSix.getButtons().add(roosterButtonSix);
+    sceneSix.getButtons().add(dogButtonSix);
+    sceneSix.getButtons().add(pigButtonSix);
+    sceneSix.getButtons().add(cowButtonSix);
     scenes[5]=sceneSix;
+    
+    //scene seven
+    Scene sceneSeven = new Scene("scene6.wav", "error.wav");
+    sceneSeven.getTypes().add("bull");
+    sceneSeven.getTypes().add("rain");
+    AnimalButton bullButtonSeven = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 300, 10, 128, 128);
+    AnimalButton duckButtonSeven = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
+    AnimalButton roosterButtonSeven = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 10, 100, 128, 128);
+    AnimalButton dogButtonSeven = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 250, 128, 128);
+    AnimalButton pigButtonSeven = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 150, 320, 128, 128);
+    AnimalButton rainButtonSeven = new AnimalButton("rain", "rain.wav", "rain.png", "rain-selected.png", 300, 340, 128, 128);
+    sceneSeven.getButtons().add(bullButtonSeven);
+    sceneSeven.getButtons().add(duckButtonSeven);
+    sceneSeven.getButtons().add(roosterButtonSeven);
+    sceneSeven.getButtons().add(dogButtonSeven);
+    sceneSeven.getButtons().add(pigButtonSeven);
+    sceneSeven.getButtons().add(rainButtonSeven);
+    scenes[6]=sceneSeven;
   }
 
   void displayScene(int argLevel){
@@ -108,7 +158,6 @@ class GameController{
   }
   
   boolean validatePressButton(Toggle argButton, int argLevel){
-    debugger;
     if(argLevel<0){
       return;
     }
