@@ -14,6 +14,8 @@ boolean gameOver;
 boolean start;
 int level;
 
+/* @pjs preload="background.jpg"; */
+
 void setup()
 {
    size(640, 480);
