@@ -1,9 +1,8 @@
 /***Final Project*/
 
-/*PigButton pigButton;
-CowButton cowButton;*/
-
 PImage backgroundImage;
+Maxim maxi;
+AudioPlayer playerEnviroment;
 
 Button next;
 Button startButton;
@@ -18,6 +17,10 @@ void setup()
    size(640, 480);
    level = -1;
    backgroundImage = loadImage("background.jpg");
+   
+   maxi = new Maxim(this);
+   playerEnviroment = maxi.loadFile("enviroment.wav");
+   playerEnviroment.setLooping(true);
    
    PImage nextActive = loadImage("next.png");
    next = new Button("next", 500, 110, 128,128);
@@ -56,6 +59,7 @@ void mousePressed()
     start=true;
     level=0;
     controller.startLevel(level);
+    playerEnviroment.play();
   }
 }
 
@@ -63,21 +67,21 @@ void mouseReleased()
 {
   controller.mouseReleasedScene(level);
 }
-class PigButton extends Toggle{
+class AnimalButton extends Toggle{
     
-   PImage ButtonInactive = loadImage("pig.png");
-   PImage ButtonActive = loadImage("pig-selected.png");
+   PImage buttonInactive;// = loadImage("pig.png");
+   PImage buttonActive;// = loadImage("pig-selected.png");
    Maxim maxi;
    AudioPlayer player;
-   String type = "pig";
   
-   
-   PigButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("pig", argPosX, argPosY, argWidth, argHeight);
+   AnimalButton(String argName, String argSound, String argActive, String argInactive, int argPosX, int argPosY, int argWidth, int argHeight){
+     super(argName, argPosX, argPosY, argWidth, argHeight);
      maxi = new Maxim(this);
-     player = maxi.loadFile("pig.wav");
-     super.setInactiveImage(ButtonInactive);
-     super.setActiveImage(ButtonActive);  
+     player = maxi.loadFile(argSound);
+     buttonInactive = loadImage(argActive);
+     buttonActive = loadImage(argInactive);
+     super.setInactiveImage(buttonInactive);
+     super.setActiveImage(buttonActive);  
    }
    
    void playSound(){
@@ -85,31 +89,6 @@ class PigButton extends Toggle{
      player.play();
    }
 }
-
-class CowButton extends Toggle{
-    
-   PImage ButtonInactive = loadImage("cow.png");
-   PImage ButtonActive = loadImage("cow-selected.png");
-   Maxim maxi;
-   AudioPlayer player;
-    String type = "cow";
-   
-   CowButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("cow", argPosX, argPosY, argWidth, argHeight);
-     maxi = new Maxim(this);
-     player = maxi.loadFile("cow.wav");
-     super.setInactiveImage(ButtonInactive);
-     super.setActiveImage(ButtonActive);  
-   }
-   
-   void playSound(){
-     player.cue(0);
-     player.play();
-   }
-}
-
-
-
 
 
 
@@ -731,7 +710,6 @@ class MultiSlider extends Widget
 class GameController{
   
   Scene[] scenes;
-  
   boolean levelCompleted;
   
   GameController(){
@@ -739,24 +717,62 @@ class GameController{
   }
   
   void createScenes(){
-    Scene sceneOne = new Scene("scene1.wav");
+    //scene one
+    Scene sceneOne = new Scene("scene1.wav", "error.wav");
     sceneOne.getTypes().add("pig");
-    PigButton pigButton = new PigButton(100, 10, 128, 128);
-    CowButton cowButton = new CowButton(250, 10, 128, 128);
+    AnimalButton pigButton = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 100, 10, 128, 128);
+    AnimalButton cowButton = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 250, 10, 128, 128);
     sceneOne.getButtons().add(pigButton);
     sceneOne.getButtons().add(cowButton);
     scenes[0]=sceneOne;
     
     //scene two
-    Scene sceneTwo = new Scene("scene1.wav");
+    Scene sceneTwo = new Scene("scene2.wav", "error.wav");
     sceneTwo.getTypes().add("cow");
-    CowButton cowButtonTwo = new CowButton(250, 10, 128, 128);
+    sceneTwo.getTypes().add("pig");
+    AnimalButton cowButtonTwo = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 150, 20, 128, 128);
+    AnimalButton pigButtonTwo = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 50, 160, 128, 128);
+    AnimalButton roosterButtonTwo = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 150, 300, 128, 128);
     sceneTwo.getButtons().add(cowButtonTwo);
+    sceneTwo.getButtons().add(pigButtonTwo);
+    sceneTwo.getButtons().add(roosterButtonTwo);
     scenes[1]=sceneTwo;
+    
+    //scene three
+    Scene sceneThree = new Scene("scene3.wav", "error.wav");
+    sceneThree.getTypes().add("dog");
+    sceneThree.getTypes().add("rooster");
+    AnimalButton duckButtonThree = new AnimalButton("duck", "duck.wav", "duck.png", "dcuk-selected.png", 150, 20, 128, 128);
+    AnimalButton dogButtonThree = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 50, 160, 128, 128);
+    AnimalButton roosterButtonThree = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 150, 300, 128, 128);
+    sceneThree.getButtons().add(dogButtonThree);
+    sceneThree.getButtons().add(duckButtonThree);
+    sceneThree.getButtons().add(roosterButtonThree);
+    scenes[2]=sceneThree;
+    
+    //scene four
+    Scene sceneFour = new Scene("scene4.wav", "error.wav");
+    sceneFour.getTypes().add("dog");
+    AnimalButton dogButtonFour = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 250, 10, 128, 128);
+    sceneFour.getButtons().add(dogButtonFour);
+    scenes[3]=sceneFour;
+    
+    //scene five
+    Scene sceneFive = new Scene("scene4.wav", "error.wav");
+    sceneFive.getTypes().add("duck");
+    AnimalButton duckButtonFive = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 250, 10, 128, 128);
+    sceneFive.getButtons().add(duckButtonFive);
+    scenes[4]=sceneFive;
+    
+    //scene six
+    Scene sceneSix = new Scene("scene5.wav", "error.wav");
+    sceneSix.getTypes().add("bull");
+    AnimalButton bullButtonSix = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 250, 10, 128, 128);
+    sceneSix.getButtons().add(bullButtonSix);
+    scenes[5]=sceneSix;
   }
 
   void displayScene(int argLevel){
-      //Toggle[] tmpButtons = scenes[argLevel].getButtons();
       ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
       for(int i=0; i < tmpButtons.size(); i++){
         if(tmpButtons.get(i) != null){
@@ -769,10 +785,14 @@ class GameController{
     if(argLevel<0){
       return;
     }
-//    Toggle[] tmpButtons = scenes[argLevel].getButtons();
     ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
     for(int i=0; i < tmpButtons.size(); i++){
      if(tmpButtons.get(i).mousePressed()){
+       if(!validatePressButton(tmpButtons.get(i), argLevel)){
+         scenes[argLevel].playError();
+         tmpButtons.get(i).set(true);
+         return;
+       }
        tmpButtons.get(i).playSound();
      }
     }
@@ -782,7 +802,6 @@ class GameController{
     if(argLevel<0){
       return;
     }
-     //Toggle[] tmpButtons = scenes[argLevel].getButtons();
      ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
       for(int i=0; i < tmpButtons.size(); i++){
         tmpButtons.get(i).mouseReleased();
@@ -791,12 +810,24 @@ class GameController{
   }
   
   boolean validateLevelCompleted(int argLevel){
-    //String[] tmpTypes = scenes[argLevel].getTypes();
-     //if(getCounterButtonsSelected(argLevel) == tmpTypes.length){
      if(getCounterButtonsSelected(argLevel) == scenes[argLevel].getTypes().size()){
        return true;
      }
      return false;
+  }
+  
+  boolean validatePressButton(Toggle argButton, int argLevel){
+    debugger;
+    if(argLevel<0){
+      return;
+    }
+    ArrayList<String> tmpTypes = scenes[argLevel].getTypes();
+    for(int i=0; i<tmpTypes.size(); i++){
+      if(tmpTypes.get(i).equals(argButton.getName())){
+        return true;
+      }
+    }
+    return false;
   }
   
   boolean isLevelCompleted(){
@@ -808,7 +839,6 @@ class GameController{
   }
   
   int getCounterButtonsSelected(int argLevel){
-     //Toggle[] tmpButtons = scenes[argLevel].getButtons();
      ArrayList<Toggle> tmpButtons = scenes[argLevel].getButtons();
      int counter = 0;
      for(int i=0; i < tmpButtons.size(); i++){
@@ -816,7 +846,6 @@ class GameController{
          counter++;
        }
      }
-     println("counter -> "+counter);
      return counter;
   }
   
@@ -828,12 +857,14 @@ class GameController{
 class Scene{
    Maxim maxi;
    AudioPlayer player;
+   AudioPlayer errorPlayer;
    ArrayList <Toggle> buttons = new ArrayList <Toggle>();
    ArrayList <String> types = new ArrayList <String>(); 
    
-   Scene(String argSound){
+   Scene(String argSound, String argErrorSound){
      maxi = new Maxim(this);
-     player = maxi.loadFile(argSound);  
+     player = maxi.loadFile(argSound);
+     errorPlayer = maxi.loadFile(argErrorSound);
    }
    
    ArrayList<Toggle> getButtons(){
@@ -847,6 +878,11 @@ class Scene{
    void playScene(){
      player.cue(0);
      player.play();
+   }
+   
+   void playError(){
+     errorPlayer.cue(0);
+     errorPlayer.play();
    }
 }
 

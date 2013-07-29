@@ -1,9 +1,8 @@
 /***Final Project*/
 
-/*PigButton pigButton;
-CowButton cowButton;*/
-
 PImage backgroundImage;
+Maxim maxi;
+AudioPlayer playerEnviroment;
 
 Button next;
 Button startButton;
@@ -18,6 +17,10 @@ void setup()
    size(640, 480);
    level = -1;
    backgroundImage = loadImage("background.jpg");
+   
+   maxi = new Maxim(this);
+   playerEnviroment = maxi.loadFile("enviroment.wav");
+   playerEnviroment.setLooping(true);
    
    PImage nextActive = loadImage("next.png");
    next = new Button("next", 500, 110, 128,128);
@@ -56,6 +59,7 @@ void mousePressed()
     start=true;
     level=0;
     controller.startLevel(level);
+    playerEnviroment.play();
   }
 }
 

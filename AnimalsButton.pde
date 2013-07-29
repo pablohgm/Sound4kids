@@ -1,18 +1,18 @@
-class PigButton extends Toggle{
+class AnimalButton extends Toggle{
     
-   PImage ButtonInactive = loadImage("pig.png");
-   PImage ButtonActive = loadImage("pig-selected.png");
+   PImage buttonInactive;// = loadImage("pig.png");
+   PImage buttonActive;// = loadImage("pig-selected.png");
    Maxim maxi;
    AudioPlayer player;
-   String type = "pig";
   
-   
-   PigButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("pig", argPosX, argPosY, argWidth, argHeight);
+   AnimalButton(String argName, String argSound, String argActive, String argInactive, int argPosX, int argPosY, int argWidth, int argHeight){
+     super(argName, argPosX, argPosY, argWidth, argHeight);
      maxi = new Maxim(this);
-     player = maxi.loadFile("pig.wav");
-     super.setInactiveImage(ButtonInactive);
-     super.setActiveImage(ButtonActive);  
+     player = maxi.loadFile(argSound);
+     buttonInactive = loadImage(argActive);
+     buttonActive = loadImage(argInactive);
+     super.setInactiveImage(buttonInactive);
+     super.setActiveImage(buttonActive);  
    }
    
    void playSound(){
@@ -20,30 +20,5 @@ class PigButton extends Toggle{
      player.play();
    }
 }
-
-class CowButton extends Toggle{
-    
-   PImage ButtonInactive = loadImage("cow.png");
-   PImage ButtonActive = loadImage("cow-selected.png");
-   Maxim maxi;
-   AudioPlayer player;
-    String type = "cow";
-   
-   CowButton(int argPosX, int argPosY, int argWidth, int argHeight){
-     super("cow", argPosX, argPosY, argWidth, argHeight);
-     maxi = new Maxim(this);
-     player = maxi.loadFile("cow.wav");
-     super.setInactiveImage(ButtonInactive);
-     super.setActiveImage(ButtonActive);  
-   }
-   
-   void playSound(){
-     player.cue(0);
-     player.play();
-   }
-}
-
-
-
 
 
