@@ -34,7 +34,7 @@ void setup()
    start=false;
    
    PImage gameOverActive = loadImage("game-over.png");
-   gameOverButton = new Button("gameOver", 250, 200, 89,128);
+   gameOverButton = new Button("gameOver", 50, 300, 89,128);
    gameOverButton.setActiveImage(gameOverActive);
    gameOver=false;
    
@@ -45,13 +45,12 @@ void setup()
 void draw()
 {  
   background(backgroundImage);
-  if(!start){
-    startButton.display();
+  if(gameOver){
+    gameOverButton.display();
     return;
   }
-  if(gameOver){
-    println("print game Over");
-    gameOverButton.display();
+  if(!start){
+    startButton.display();
     return;
   }
   controller.displayScene(level);
@@ -65,22 +64,22 @@ void mousePressed()
   controller.mousePressedScene(level);
   if(next.mousePressed()){
     level+=1;
-    if(level>6){
+    if(level>5){
       gameOver=true;
+      level=-1;
       playerEnviroment.stop();
     }
     controller.startLevel(level);
   }
   if(startButton.mousePressed()){
     start=true;
-    level=6;
+    level=0;
     controller.startLevel(level);
     playerEnviroment.play();
   }
   if(gameOverButton.mousePressed()){
-    /*debugger;
-    start=false;*/
-    println("press game over button");
+    debugger;
+    start=false;
     gameOver=false;
   }
 }

@@ -34,7 +34,7 @@ void setup()
    start=false;
    
    PImage gameOverActive = loadImage("game-over.png");
-   gameOverButton = new Button("gameOver", 250, 200, 89,128);
+   gameOverButton = new Button("gameOver", 50, 300, 89,128);
    gameOverButton.setActiveImage(gameOverActive);
    gameOver=false;
    
@@ -45,13 +45,12 @@ void setup()
 void draw()
 {  
   background(backgroundImage);
-  if(!start){
-    startButton.display();
+  if(gameOver){
+    gameOverButton.display();
     return;
   }
-  if(gameOver){
-    println("print game Over");
-    gameOverButton.display();
+  if(!start){
+    startButton.display();
     return;
   }
   controller.displayScene(level);
@@ -65,22 +64,22 @@ void mousePressed()
   controller.mousePressedScene(level);
   if(next.mousePressed()){
     level+=1;
-    if(level>6){
+    if(level>5){
       gameOver=true;
+      level=-1;
       playerEnviroment.stop();
     }
     controller.startLevel(level);
   }
   if(startButton.mousePressed()){
     start=true;
-    level=6;
+    level=5;
     controller.startLevel(level);
     playerEnviroment.play();
   }
   if(gameOverButton.mousePressed()){
-    /*debugger;
-    start=false;*/
-    println("press game over button");
+    debugger;
+    start=false;
     gameOver=false;
   }
 }
@@ -808,40 +807,22 @@ class GameController{
     scenes[4]=sceneFive;
     
     //scene six
-    Scene sceneSix = new Scene("scene5.wav", "error.wav");
+    Scene sceneSix = new Scene("scene6.wav", "error.wav");
     sceneSix.getTypes().add("bull");
-    sceneSix.getTypes().add("rooster");
+    sceneSix.getTypes().add("rain");
     AnimalButton bullButtonSix = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 300, 10, 128, 128);
     AnimalButton duckButtonSix = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
     AnimalButton roosterButtonSix = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 10, 100, 128, 128);
     AnimalButton dogButtonSix = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 250, 128, 128);
     AnimalButton pigButtonSix = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 150, 320, 128, 128);
-    AnimalButton cowButtonSix = new AnimalButton("cow", "cow.wav", "cow.png", "cow-selected.png", 300, 340, 128, 128);
+    AnimalButton rainButtonSix = new AnimalButton("rain", "rain.wav", "rain.png", "rain-selected.png", 300, 340, 128, 128);
     sceneSix.getButtons().add(bullButtonSix);
     sceneSix.getButtons().add(duckButtonSix);
     sceneSix.getButtons().add(roosterButtonSix);
     sceneSix.getButtons().add(dogButtonSix);
     sceneSix.getButtons().add(pigButtonSix);
-    sceneSix.getButtons().add(cowButtonSix);
+    sceneSix.getButtons().add(rainButtonSix);
     scenes[5]=sceneSix;
-    
-    //scene seven
-    Scene sceneSeven = new Scene("scene6.wav", "error.wav");
-    sceneSeven.getTypes().add("bull");
-    sceneSeven.getTypes().add("rain");
-    AnimalButton bullButtonSeven = new AnimalButton("bull", "bull.wav", "bull.png", "bull-selected.png", 300, 10, 128, 128);
-    AnimalButton duckButtonSeven = new AnimalButton("duck", "duck.wav", "duck.png", "duck-selected.png", 150, 20, 128, 128);
-    AnimalButton roosterButtonSeven = new AnimalButton("rooster", "rooster.wav", "rooster.png", "rooster-selected.png", 10, 100, 128, 128);
-    AnimalButton dogButtonSeven = new AnimalButton("dog", "dog.wav", "dog.png", "dog-selected.png", 10, 250, 128, 128);
-    AnimalButton pigButtonSeven = new AnimalButton("pig", "pig.wav", "pig.png", "pig-selected.png", 150, 320, 128, 128);
-    AnimalButton rainButtonSeven = new AnimalButton("rain", "rain.wav", "rain.png", "rain-selected.png", 300, 340, 128, 128);
-    sceneSeven.getButtons().add(bullButtonSeven);
-    sceneSeven.getButtons().add(duckButtonSeven);
-    sceneSeven.getButtons().add(roosterButtonSeven);
-    sceneSeven.getButtons().add(dogButtonSeven);
-    sceneSeven.getButtons().add(pigButtonSeven);
-    sceneSeven.getButtons().add(rainButtonSeven);
-    scenes[6]=sceneSeven;
   }
 
   void displayScene(int argLevel){
