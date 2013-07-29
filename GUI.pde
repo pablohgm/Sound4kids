@@ -176,7 +176,8 @@ class Button extends Widget
       image(currentImage, pos.x, pos.y, imgWidth, extents.y);
       stroke(bgColor);
       noFill();
-      rect(pos.x, pos.y, imgWidth,  extents.y);
+      /**Remove rect no border line*/
+      //rect(pos.x, pos.y, imgWidth,  extents.y);
       //noTint();
       popStyle();
     }

@@ -73,7 +73,7 @@ void mousePressed()
   }
   if(startButton.mousePressed()){
     start=true;
-    level=5;
+    level=0;
     controller.startLevel(level);
     playerEnviroment.play();
   }
@@ -290,7 +290,8 @@ class Button extends Widget
       image(currentImage, pos.x, pos.y, imgWidth, extents.y);
       stroke(bgColor);
       noFill();
-      rect(pos.x, pos.y, imgWidth,  extents.y);
+      /**Remove rect no border line*/
+      //rect(pos.x, pos.y, imgWidth,  extents.y);
       //noTint();
       popStyle();
     }
